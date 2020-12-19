@@ -1,0 +1,14 @@
+**/*/__pycache__
+.idea/
+/embeddings/*.txt
+/embeddings/*.pickle
+/models/neural/**/*.png
+/models/*.png
+/dataset/Extras/
+/submissions/
+/dataset/Subtask_A/silver_no_seeds.txt
+/dataset/Subtask_A/silver.txt
+/dataset/Subtask_A/silver_seeds_omitted.txt
+/dataset/twitter_download/
+/dataset/README.txt
+/.flake8
