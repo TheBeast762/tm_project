@@ -186,9 +186,9 @@ class Task4Loader:
         else:
             return training, validation, testing
 
-    def load_final(self):
+    def load_final(self, val_size):
         X_train, X_test, y_train, y_test = train_test_split(self.X, self.y,
-                                                            test_size=0.1,
+                                                            test_size=val_size,
                                                             stratify=self.y,
                                                             random_state=27)
         print("\nPreparing training set...")
