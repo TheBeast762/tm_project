@@ -1,9 +1,10 @@
 from keras.constraints import maxnorm
 from keras.engine import Input
 from keras.engine import Model
+from keras.legacy.layers import MaxoutDense
 from keras.layers import Dropout, Dense, Bidirectional, LSTM, \
     Embedding, GaussianNoise, Activation, Flatten, \
-    RepeatVector, MaxoutDense, GlobalMaxPooling1D, \
+    RepeatVector, GlobalMaxPooling1D, \
     Convolution1D, MaxPooling1D, concatenate, Conv1D
 from keras.models import Sequential
 from keras.optimizers import Adam

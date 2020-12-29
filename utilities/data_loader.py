@@ -8,7 +8,7 @@ from ekphrasis.classes.tokenizer import SocialTokenizer
 from ekphrasis.dicts.emoticons import emoticons
 from kutilities.helpers.data_preparation import print_dataset_statistics, \
     labels_to_categories, categories_to_onehot
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 
 from dataset.data_loader import SemEvalDataLoader
 from sklearn.pipeline import Pipeline

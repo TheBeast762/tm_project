@@ -1,3 +1,4 @@
+
 import pickle
 import matplotlib
 import numpy
@@ -9,9 +10,9 @@ from kutilities.helpers.data_preparation import get_labels_to_categories_map, \
 from sklearn.metrics import f1_score, precision_score
 from sklearn.metrics import recall_score
 
-from dataset.data_loader import SemEvalDataLoader
-from models.nn_models import build_attention_RNN
-from utilities.data_loader import get_embeddings, Task4Loader, prepare_dataset
+from .. import dataset.data_loader.SemEvalDataLoader
+from .. import models.nn_models.build_attention_RNN
+from .. import utilities.data_loader.get_embeddings, utilities.data_loader.Task4Loader, utilities.data_loader.prepare_dataset
 
 numpy.random.seed(1337)  # for reproducibility
 
@@ -126,12 +127,12 @@ if not FINAL:
     _datasets["3-test"] = testing
 
 metrics_callback = MetricsCallback(datasets=_datasets, metrics=metrics)
-#plotting = PlottingCallback(grid_ranges=(0.5, 0.75), height=5,
- #                           benchmarks={"SE17": 0.681})
+plotting = PlottingCallback(grid_ranges=(0.5, 0.75), height=5,
+                            benchmarks={"SE17": 0.681})
 
 _callbacks = []
 _callbacks.append(metrics_callback)
-#_callbacks.append(plotting)
+_callbacks.append(plotting)
 
 if PERSIST:
     checkpointer = ModelCheckpoint(filepath=best_model(),
@@ -149,7 +150,7 @@ print("Class weights:",
 
 history = nn_model.fit(training[0], training[1],
                        validation_data=validation if not FINAL else testing,
-                       epochs=20, batch_size=50,
+                       epochs=50, batch_size=50,
                        class_weight=class_weights, callbacks=_callbacks)
 
 pickle.dump(history.history,
