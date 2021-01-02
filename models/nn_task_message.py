@@ -153,10 +153,10 @@ print("Class weights:",
 dataset_train = prepare_dataset(loader.X, loader.y, loader.pipeline)
 for i in range(2):
   kf = KFold(n_splits=10)
-  for train_index, val_index in kf.split(training[0]):
-    validation = dataset_train[0][val_index], dataset_train[1][val_index]
-    pipeline.fit(dataset_train[0][train_index], dataset_train[1][train_index], 
-                          validation_data=validation, batch_size=50, callbacks=_callbacks)
+  for train_index, val_index in kf.split(dataset_train[0]):
+    training = SMOTE().fit_sample(dataset_train[0][train_index], dataset_train[1][train_index])
+    validation = SMOTE().fit_sample(dataset_train[0][val_index], dataset_train[1][val_index])
+    nn_model.fit(training[0], training[1], validation_data=validation, batch_size=50, callbacks=_callbacks)
 
 #pickle.dump(history.history,
  #             open("stratified.pickle", "wb"))
