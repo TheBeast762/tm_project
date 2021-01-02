@@ -1,4 +1,6 @@
 import pickle
+import matplotlib.pyplot as plt
+import numpy as np
 import os
 #from utilities.data_loader import get_embeddings, Task4Loader, prepare_dataset
 #from dataset.data_loader import SemEvalDataLoader
@@ -10,14 +12,11 @@ import os
 #	accuracy_score(correct, predicted)#accuracy
 
 if __name__ == '__main__':
-	models = os.listdir("./saved_models")
-	models.remove("score.py") 
-	results_dict = {}
+	models = ['val_size0.05.pickle', 'val_size0.06.pickle', 'val_size0.07.pickle', 'val_size0.08.pickle', 'val_size0.09.pickle', 'baseline.pickle', 'val_size0.11.pickle', 
+		'val_size0.12.pickle', 'val_size0.13.pickle', 'val_size0.14.pickle', 'val_size0.15.pickle']
 	for model in models:
-		print("_____MODEL_"+model+"_____")
-		results_dict[os.path.splitext(model)[0]] = pickle.load(open('saved_models/'+model, 'rb'))
-		print(results_dict[os.path.splitext(model)[0]].keys())
-		print(results_dict[os.path.splitext(model)[0]]['3-test.f1_pn'])
-		print(results_dict[os.path.splitext(model)[0]]['3-test.M_recall'])
-		print(results_dict[os.path.splitext(model)[0]]['3-test.M_precision'])
-		input()
+		result = pickle.load(open('saved_models/'+model, 'rb'))
+		print()
+		print("_____MODEL_"+str(model)+"_____")
+		print("   f1_pn: "+str(result['3-test.f1_pn'][-1]))
+		print("   avg_recall: "+str(result['3-test.M_recall'][-1]))

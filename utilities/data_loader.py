@@ -162,11 +162,11 @@ class Task4Loader:
 
     def load_train_val_test(self, only_test=False):
         X_train, X_rest, y_train, y_rest = train_test_split(self.X, self.y,
-                                                            test_size=0.3,
+                                                            test_size=0.32,
                                                             stratify=self.y,
                                                             random_state=42)
         X_val, X_test, y_val, y_test = train_test_split(X_rest, y_rest,
-                                                        test_size=0.5,
+                                                        test_size=0.625,
                                                         stratify=y_rest,
                                                         random_state=42)
 
@@ -186,9 +186,9 @@ class Task4Loader:
         else:
             return training, validation, testing
 
-    def load_final(self, val_size):
+    def load_final(self):
         X_train, X_test, y_train, y_test = train_test_split(self.X, self.y,
-                                                            test_size=val_size,
+                                                            test_size=0.12,
                                                             stratify=self.y,
                                                             random_state=27)
         print("\nPreparing training set...")

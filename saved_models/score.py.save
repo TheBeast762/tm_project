@@ -1,0 +1,11 @@
+import pickle
+import os
+
+def evaluation_report(correct, predicted):
+	return recall_score(correct, predicted, average="macro"), #avgRecall
+	(f1_score(correct
+if __name__ == '__main__':
+	files = os.listdir()
+	print(files)
+	loaded_model = pickle.load(open('saved_models/baseline.pickle', 'rb'))
+	print(loaded_model.keys)
