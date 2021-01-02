@@ -150,15 +150,13 @@ print("Class weights:",
 #                         validation_data=validation if not FINAL else testing,
 #                         epochs=20, batch_size=50,
 #                         class_weight=class_weights, callbacks=_callbacks)
-training = prepare_dataset(loader.X, loader.y, loader.pipeline)
+dataset_train = prepare_dataset(loader.X, loader.y, loader.pipeline)
 for i in range(2):
   kf = KFold(n_splits=10)
   for train_index, val_index in kf.split(training[0]):
-    training = X[train_index], y[train_index]
-    validation = y[val_index], y[val_index]
-    history = nn_model.fit(training[0], training[1],
-                       validation_data=validation,
-                       epochs=1, batch_size=50,
-                       callbacks=_callbacks)
+    validation = dataset_train[0][val_index], dataset_train[1][val_index]
+    pipeline.fit(dataset_train[0][train_index], dataset_train[1][train_index], 
+                          validation_data=validation, batch_size=50, callbacks=_callbacks)
+
 #pickle.dump(history.history,
  #             open("stratified.pickle", "wb"))
