@@ -161,6 +161,7 @@ for i in range(2):
       for ix, value in enumerate(result):
         results[ix] += value
     print(results)
+    results = [0, 0, 0]
     for result in validation[1]:
       for ix, value in enumerate(result):
         results[ix] += value
