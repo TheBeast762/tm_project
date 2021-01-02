@@ -1,7 +1,7 @@
 import pickle
 from collections import Counter
 from imblearn.pipeline import Pipeline
-from sklearn.model_selection import RepeatedStratifiedKFold, cross_val_score
+from sklearn.model_selection import KFold
 import matplotlib
 import numpy
 from keras.callbacks import ModelCheckpoint
@@ -101,8 +101,6 @@ nn_model = build_attention_RNN(embeddings, classes=3, max_length=max_length,
 
 print(nn_model.summary())
 pipeline = Pipeline(steps=[('over', SMOTE()), ('model', nn_model)])
-cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=2, random_state=1)
-training = prepare_dataset(loader.X, loader.y, loader.pipeline)
   ############################################################################
   # CALLBACKS
   ############################################################################
@@ -153,8 +151,14 @@ print("Class weights:",
 #                         epochs=20, batch_size=50,
 #                         class_weight=class_weights, callbacks=_callbacks)
 training = prepare_dataset(loader.X, loader.y, loader.pipeline)
-print(training[1][:10])
-scores = cross_val_score(pipeline, training[0], training[1], scoring=make_scorer(f1_score, average="macro", labels=["positive","negative"]), cv=cv)
-print(scores)
+for i in range(2):
+  kf = KFold(n_splits=10)
+  for train_index, val_index in kf.split(training[0]):
+    validation = X[train_index], X[val_index]
+    y_train, y_val = y[train_index], y[val_index]
+    history = nn_model.fit(training[0], training[1],
+                       validation_data=validation,
+                       epochs=1, batch_size=50,
+                       callbacks=_callbacks)
 #pickle.dump(history.history,
  #             open("stratified.pickle", "wb"))
