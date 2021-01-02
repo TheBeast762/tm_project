@@ -154,8 +154,8 @@ training = prepare_dataset(loader.X, loader.y, loader.pipeline)
 for i in range(2):
   kf = KFold(n_splits=10)
   for train_index, val_index in kf.split(training[0]):
-    validation = X[train_index], X[val_index]
-    y_train, y_val = y[train_index], y[val_index]
+    training = X[train_index], y[train_index]
+    validation = y[val_index], y[val_index]
     history = nn_model.fit(training[0], training[1],
                        validation_data=validation,
                        epochs=1, batch_size=50,
