@@ -156,6 +156,16 @@ for i in range(2):
   for train_index, val_index in kf.split(dataset_train[0]):
     training = SMOTE().fit_sample(dataset_train[0][train_index], dataset_train[1][train_index])
     validation = SMOTE().fit_sample(dataset_train[0][val_index], dataset_train[1][val_index])
+    results = [0, 0, 0]
+    for result in training[1]:
+      for ix, value in enumerate(result):
+        results[ix] += value
+    print(results)
+    for result in validation[1]:
+      for ix, value in enumerate(result):
+        results[ix] += value
+    print(results)
+
     nn_model.fit(training[0], training[1], validation_data=validation, batch_size=50, callbacks=_callbacks)
 
 #pickle.dump(history.history,
